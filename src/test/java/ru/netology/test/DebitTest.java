@@ -33,6 +33,6 @@ public class DebitTest {
         var debitPage = firstPage.payByDebitCard();
         var cardInfo = DataHelper.getApprovedCard();
         debitPage.completeDebitForm(cardInfo);
-
+        debitPage.getSuccessNotification();
     }
 }
