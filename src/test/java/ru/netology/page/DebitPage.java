@@ -18,11 +18,29 @@ public class DebitPage {
     private static final SelenideElement cvc = $("[placeholder=\"999\"]");
     private static final SelenideElement button = $(byText("Продолжить"));
     private static final SelenideElement successNotification = $(byText("Успешно")).parent().$(".notification__title");
-
-
+    private static final SelenideElement errorNotification = $(byText("Ошибка! Банк отказал в проведении операции."));
+    private static final SelenideElement wrongFormat = $(byText("Неверный формат"));
+    private static final SelenideElement requiredField = $(byText("Поле обязательно для заполнения"));
+    private static final SelenideElement wrongExpirationDate = $(byText("Неверно указан срок действия карты"));
 
     public void getSuccessNotification() {
         successNotification.shouldBe(Condition.visible, Duration.ofSeconds(15));
+    }
+
+    public void getErrorNotification() {
+        errorNotification.shouldBe(Condition.visible, Duration.ofSeconds(15));
+    }
+
+    public void getWrongFormat() {
+        wrongFormat.shouldBe(Condition.visible);
+    }
+
+    public void getRequiredField() {
+        requiredField.shouldBe(Condition.visible);
+    }
+
+    public void getWrongExpirationDate() {
+        wrongExpirationDate.shouldBe(Condition.visible);
     }
 
     public void completeDebitForm(DataHelper.CardInfo cardInfo) {
