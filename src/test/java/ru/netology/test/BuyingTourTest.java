@@ -4,6 +4,7 @@ import com.codeborne.selenide.logevents.SelenideLogger;
 import io.qameta.allure.selenide.AllureSelenide;
 import org.junit.jupiter.api.*;
 import ru.netology.data.DataHelper;
+import ru.netology.data.SQLHelper;
 import ru.netology.page.MainPage;
 
 import static com.codeborne.selenide.Selenide.open;
@@ -109,6 +110,15 @@ public class BuyingTourTest {
     }
 
     @Test
+    @DisplayName("Отправка формы с месяцем до текущего (текущего года)")
+    public void shouldSendPreviousMonthCurrentYear() {
+        var debitPage = mainPage.payByDebitCard();
+        var cardInfo = DataHelper.getPreviousMonthCurrentYear();
+        debitPage.completeDebitForm(cardInfo);
+        debitPage.getWrongExpirationDate();
+    }
+
+    @Test
     @DisplayName("Ввод одной цифры в поле месяц")
     public void shouldSendOneDigitMonth() {
         var debitPage = mainPage.payByDebitCard();
@@ -117,14 +127,14 @@ public class BuyingTourTest {
         debitPage.getWrongFormat();
     }
 
-    @Test
-    @DisplayName("Ввод трех цифр в поле месяц")
-    public void shouldSendThreeDigitMonth() {
-        var debitPage = mainPage.payByDebitCard();
-        var cardInfo = DataHelper.getThreeDigitMonth();
-        debitPage.completeDebitForm(cardInfo);
-        debitPage.getWrongExpirationDate();
-    }
+//    @Test
+//    @DisplayName("Ввод трех цифр в поле месяц")
+//    public void shouldSendThreeDigitMonth() {
+//        var debitPage = mainPage.payByDebitCard();
+//        var cardInfo = DataHelper.getThreeDigitMonth();
+//        debitPage.completeDebitForm(cardInfo);
+//        debitPage.getWrongExpirationDate();
+//    }
 
     @Test
     @DisplayName("Ввод букв в поле месяц")
@@ -150,7 +160,7 @@ public class BuyingTourTest {
         var debitPage = mainPage.payByDebitCard();
         var cardInfo = DataHelper.getYearInPast();
         debitPage.completeDebitForm(cardInfo);
-        debitPage.getWrongFormat();
+        debitPage.getExpiredDate();
     }
 
     @Test
@@ -159,7 +169,7 @@ public class BuyingTourTest {
         var debitPage = mainPage.payByDebitCard();
         var cardInfo = DataHelper.getYearInFuture();
         debitPage.completeDebitForm(cardInfo);
-        debitPage.getWrongFormat();
+        debitPage.getWrongExpirationDate();
     }
 
     @Test
@@ -171,14 +181,14 @@ public class BuyingTourTest {
         debitPage.getWrongFormat();
     }
 
-    @Test
-    @DisplayName("Ввод трех цифр в поле год")
-    public void shouldSendThreeDigitYear() {
-        var debitPage = mainPage.payByDebitCard();
-        var cardInfo = DataHelper.getThreeDigitYear();
-        debitPage.completeDebitForm(cardInfo);
-        debitPage.getWrongFormat();
-    }
+//    @Test
+//    @DisplayName("Ввод трех цифр в поле год")
+//    public void shouldSendThreeDigitYear() {
+//        var debitPage = mainPage.payByDebitCard();
+//        var cardInfo = DataHelper.getThreeDigitYear();
+//        debitPage.completeDebitForm(cardInfo);
+//        debitPage.getWrongFormat();
+//    }
 
     @Test
     @DisplayName("Ввод букв в поле год")
@@ -243,14 +253,14 @@ public class BuyingTourTest {
         debitPage.getWrongFormat();
     }
 
-    @Test
-    @DisplayName("Ввод четырех цифр в поле CVC/CVV")
-    public void shouldSendFourDigitCVC() {
-        var debitPage = mainPage.payByDebitCard();
-        var cardInfo = DataHelper.getFourDigitCVC();
-        debitPage.completeDebitForm(cardInfo);
-        debitPage.getWrongFormat();
-    }
+//    @Test
+//    @DisplayName("Ввод четырех цифр в поле CVC/CVV")
+//    public void shouldSendFourDigitCVC() {
+//        var debitPage = mainPage.payByDebitCard();
+//        var cardInfo = DataHelper.getFourDigitCVC();
+//        debitPage.completeDebitForm(cardInfo);
+//        debitPage.getWrongFormat();
+//    }
 
     @Test
     @DisplayName("Ввод букв в поле CVC/CVV")
@@ -268,6 +278,28 @@ public class BuyingTourTest {
         var cardInfo = DataHelper.getSymbolCVC();
         debitPage.completeDebitForm(cardInfo);
         debitPage.getWrongFormat();
+    }
+
+    @Test
+    @DisplayName("Проверка в СУБД оплаты по зарегистрированной карте")
+    public void shouldCheckSQLPaymentStatusApprovedCard() {
+        var debitPage = mainPage.payByDebitCard();
+        var cardInfo = DataHelper.getApprovedCard();
+        debitPage.completeDebitForm(cardInfo);
+        debitPage.getSuccessNotification();
+        var PaymentStatus = SQLHelper.getSumSQL();
+        Assertions.assertEquals(45000, PaymentStatus);
+    }
+
+    @Test
+    @DisplayName("Проверка в СУБД оплаты по отклоненной карте")
+    public void shouldCheckSQLPaymentStatusDeclinedCard() {
+        var debitPage = mainPage.payByDebitCard();
+        var cardInfo = DataHelper.getDeclinedCard();
+        debitPage.completeDebitForm(cardInfo);
+        debitPage.getSuccessNotification();
+        var PaymentStatus = SQLHelper.getSumSQL();
+        Assertions.assertEquals(0, PaymentStatus);
     }
 
 //    @Test

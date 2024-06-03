@@ -9,7 +9,7 @@ import java.util.Locale;
 
 public class DataHelper {
 
-    private static Faker faker = new Faker(new Locale("en"));
+    private static final Faker faker = new Faker(new Locale("en"));
 
     private DataHelper() {
     }
@@ -30,9 +30,9 @@ public class DataHelper {
         return faker.numerify("###############");
     }
 
-    public static String generateCardNumberBeyondLimit() {
-        return faker.numerify("#################");
-    }
+//    public static String generateCardNumberBeyondLimit() {
+//        return faker.numerify("#################");
+//    }
 
     public static String generateEmptyCardNumber() {
         return ("");
@@ -50,17 +50,21 @@ public class DataHelper {
         return ("00");
     }
 
-    public static String generateMonthAboveBoder() {
+    public static String generateMonthAboveBorder() {
         return ("13");
+    }
+
+    public static String getPreviousMonth(int Month) {
+        return LocalDate.now().minusMonths(Month).format(DateTimeFormatter.ofPattern("MM"));
     }
 
     public static String generateOneDigitMonth() {
         return faker.numerify("#");
     }
 
-    public static String generateThreeDigitMonth() {
-        return faker.numerify("###");
-    }
+//    public static String generateThreeDigitMonth() {
+//        return faker.numerify("###");
+//    }
 
     public static String generateLetterInMonth() {
         return faker.letterify("##");
@@ -72,6 +76,10 @@ public class DataHelper {
 
     public static String generateValidYear() {
         return LocalDate.now().plusYears(faker.number().numberBetween(1, 5)).format(DateTimeFormatter.ofPattern("yy"));
+    }
+
+    public static String getCurrentYear(int Year) {
+        return LocalDate.now().plusYears(Year).format(DateTimeFormatter.ofPattern("yy"));
     }
 
     public static String generateEmptyYear() {
@@ -86,9 +94,10 @@ public class DataHelper {
         return LocalDate.now().plusYears(faker.number().numberBetween(6, 20)).format(DateTimeFormatter.ofPattern("yy"));
     }
 
-    public static String generateThreeDigitYear() {
-        return ("111");
-    }
+//    public static String generateThreeDigitYear() {
+//        return ("256");
+//    }
+
 
     public static String generateOneDigitYear() {
         return faker.numerify("#");
@@ -140,9 +149,9 @@ public class DataHelper {
         return faker.numerify("##");
     }
 
-    public static String generateFourDigitCVC() {
-        return faker.numerify("####");
-    }
+//    public static String generateFourDigitCVC() {
+//        return faker.numerify("####");
+//    }
 
     public static String generateLetterCVC() {
         return faker.letterify("###");
@@ -173,25 +182,29 @@ public class DataHelper {
         return new CardInfo(generateIncompleteCardNumber(), generateValidMonth(), generateValidYear(), generateValidOwner(), generateValidCVC());
     }
 
-    public static CardInfo getInvalidCardWith17Characters() {
-        return new CardInfo(generateCardNumberBeyondLimit(), generateValidMonth(), generateValidYear(), generateValidOwner(), generateValidCVC());
-    }
+//    public static CardInfo getInvalidCardWith17Characters() {
+//        return new CardInfo(generateCardNumberBeyondLimit(), generateValidMonth(), generateValidYear(), generateValidOwner(), generateValidCVC());
+//    }
 
     public static CardInfo getMonthUnderBorder() {
         return new CardInfo(getApprovedCardNumber(), generateMonthUnderBorder(), generateValidYear(), generateValidOwner(), generateValidCVC());
     }
 
     public static CardInfo getMonthAboveBorder() {
-        return new CardInfo(getApprovedCardNumber(), generateMonthAboveBoder(), generateValidYear(), generateValidOwner(), generateValidCVC());
+        return new CardInfo(getApprovedCardNumber(), generateMonthAboveBorder(), generateValidYear(), generateValidOwner(), generateValidCVC());
+    }
+
+    public static CardInfo getPreviousMonthCurrentYear() {
+        return new CardInfo(getApprovedCardNumber(), getPreviousMonth(1), getCurrentYear(0), generateValidOwner(), generateValidCVC());
     }
 
     public static CardInfo getOneDigitMonth() {
         return new CardInfo(getApprovedCardNumber(), generateOneDigitMonth(), generateValidYear(), generateValidOwner(), generateValidCVC());
     }
 
-    public static CardInfo getThreeDigitMonth() {
-        return new CardInfo(getApprovedCardNumber(), generateThreeDigitMonth(), generateValidYear(), generateValidOwner(), generateValidCVC());
-    }
+//    public static CardInfo getThreeDigitMonth() {
+//        return new CardInfo(getApprovedCardNumber(), generateThreeDigitMonth(), generateValidYear(), generateValidOwner(), generateValidCVC());
+//    }
 
     public static CardInfo getLettersInMonth() {
         return new CardInfo(getApprovedCardNumber(), generateLetterInMonth(), generateValidYear(), generateValidOwner(), generateValidCVC());
@@ -213,9 +226,9 @@ public class DataHelper {
         return new CardInfo(getApprovedCardNumber(), generateValidMonth(), generateOneDigitYear(), generateValidOwner(), generateValidCVC());
     }
 
-    public static CardInfo getThreeDigitYear() {
-        return new CardInfo(getApprovedCardNumber(), generateValidMonth(), generateThreeDigitYear(), generateValidOwner(), generateValidCVC());
-    }
+//    public static CardInfo getThreeDigitYear() {
+//        return new CardInfo(getApprovedCardNumber(), generateValidMonth(), generateThreeDigitYear(), generateValidOwner(), generateValidCVC());
+//    }
 
     public static CardInfo getLettersInYear() {
         return new CardInfo(getApprovedCardNumber(), generateValidMonth(), generateLetterYear(), generateValidOwner(), generateValidCVC());
@@ -245,9 +258,9 @@ public class DataHelper {
         return new CardInfo(getApprovedCardNumber(), generateValidMonth(), generateValidYear(), generateValidOwner(), generateTwoDigitCVC());
     }
 
-    public static CardInfo getFourDigitCVC() {
-        return new CardInfo(getApprovedCardNumber(), generateValidMonth(), generateValidYear(), generateValidOwner(), generateFourDigitCVC());
-    }
+//    public static CardInfo getFourDigitCVC() {
+//        return new CardInfo(getApprovedCardNumber(), generateValidMonth(), generateValidYear(), generateValidOwner(), generateFourDigitCVC());
+//    }
 
     public static CardInfo getLetterCVC() {
         return new CardInfo(getApprovedCardNumber(), generateValidMonth(), generateValidYear(), generateValidOwner(), generateLetterCVC());

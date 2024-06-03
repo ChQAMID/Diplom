@@ -22,6 +22,9 @@ public class DebitPage {
     private static final SelenideElement wrongFormat = $(byText("Неверный формат"));
     private static final SelenideElement requiredField = $(byText("Поле обязательно для заполнения"));
     private static final SelenideElement wrongExpirationDate = $(byText("Неверно указан срок действия карты"));
+    private static final SelenideElement expiredDate = $ (byText("Истёк срок действия карты"));
+
+
 
     public void getSuccessNotification() {
         successNotification.shouldBe(Condition.visible, Duration.ofSeconds(15));
@@ -41,6 +44,10 @@ public class DebitPage {
 
     public void getWrongExpirationDate() {
         wrongExpirationDate.shouldBe(Condition.visible);
+    }
+
+    public void getExpiredDate() {
+        expiredDate.shouldBe(Condition.visible);
     }
 
     public void completeDebitForm(DataHelper.CardInfo cardInfo) {
