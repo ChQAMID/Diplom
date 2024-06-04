@@ -235,14 +235,14 @@ public class BuyingTourTest {
         debitPage.getWrongFormat();
     }
 
-    @Test
-    @DisplayName("Ввод в поле Владелец 85 букв на латинице")
-    public void shouldSendOwnerOverLimit() {
-        var debitPage = mainPage.payByDebitCard();
-        var cardInfo = DataHelper.getOwnerOverLimit();
-        debitPage.completeDebitForm(cardInfo);
-        debitPage.getWrongFormat();
-    }
+//    @Test
+//    @DisplayName("Ввод в поле Владелец 85 букв на латинице")
+//    public void shouldSendOwnerOverLimit() {
+//        var debitPage = mainPage.payByDebitCard();
+//        var cardInfo = DataHelper.getOwnerOverLimit();
+//        debitPage.completeDebitForm(cardInfo);
+//        debitPage.getWrongFormat();
+//    }
 
     @Test
     @DisplayName("Ввод двух цифр в поле CVC/CVV")

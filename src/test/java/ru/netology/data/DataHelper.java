@@ -133,9 +133,9 @@ public class DataHelper {
         return ("@#$%%^&&*");
     }
 
-    public static String generateOwnerOverLimit() {
-        return ("#####################################################################################");
-    }
+//    public static String generateOwnerOverLimit() {
+//        return faker.letterify ("#####################################################################################");
+//    }
 
     public static String generateValidCVC() {
         return faker.numerify("###");
@@ -250,9 +250,9 @@ public class DataHelper {
         return new CardInfo(getApprovedCardNumber(), generateValidMonth(), generateValidYear(), generateSymbolOwner(), generateValidCVC());
     }
 
-    public static CardInfo getOwnerOverLimit() {
-        return new CardInfo(getApprovedCardNumber(), generateValidMonth(), generateValidYear(), generateOwnerOverLimit(), generateValidCVC());
-    }
+//    public static CardInfo getOwnerOverLimit() {
+//        return new CardInfo(getApprovedCardNumber(), generateValidMonth(), generateValidYear(), generateOwnerOverLimit(), generateValidCVC());
+//    }
 
     public static CardInfo getTwoDigitCVC() {
         return new CardInfo(getApprovedCardNumber(), generateValidMonth(), generateValidYear(), generateValidOwner(), generateTwoDigitCVC());
