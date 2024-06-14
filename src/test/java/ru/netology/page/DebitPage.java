@@ -26,27 +26,27 @@ public class DebitPage {
 
 
 
-    public void getSuccessNotification() {
+    public void checkSuccessNotification() {
         successNotification.shouldBe(Condition.visible, Duration.ofSeconds(15));
     }
 
-    public void getErrorNotification() {
+    public void checkErrorNotification() {
         errorNotification.shouldBe(Condition.visible, Duration.ofSeconds(15));
     }
 
-    public void getWrongFormat() {
+    public void checkWrongFormat() {
         wrongFormat.shouldBe(Condition.visible);
     }
 
-    public void getRequiredField() {
+    public void checkRequiredField() {
         requiredField.shouldBe(Condition.visible);
     }
 
-    public void getWrongExpirationDate() {
+    public void checkWrongExpirationDate() {
         wrongExpirationDate.shouldBe(Condition.visible);
     }
 
-    public void getExpiredDate() {
+    public void checkExpiredDate() {
         expiredDate.shouldBe(Condition.visible);
     }
 

@@ -19,14 +19,35 @@ public class CreditPage {
     private static final SelenideElement button = $(byText("Продолжить"));
     private static final SelenideElement successNotification = $(byText("Успешно")).parent().$(".notification__title");
     private static final SelenideElement errorNotification = $(byText("Ошибка! Банк отказал в проведении операции."));
+    private static final SelenideElement wrongFormat = $(byText("Неверный формат"));
+    private static final SelenideElement requiredField = $(byText("Поле обязательно для заполнения"));
+    private static final SelenideElement wrongExpirationDate = $(byText("Неверно указан срок действия карты"));
+    private static final SelenideElement expiredDate = $ (byText("Истёк срок действия карты"));
 
-    public void getSuccessNotification() {
+    public void checkSuccessNotification() {
         successNotification.shouldBe(Condition.visible, Duration.ofSeconds(15));
     }
 
-    public void getErrorNotification() {
+    public void checkErrorNotification() {
         errorNotification.shouldBe(Condition.visible, Duration.ofSeconds(15));
     }
+
+    public void checkWrongFormat() {
+        wrongFormat.shouldBe(Condition.visible);
+    }
+
+    public void checkRequiredField() {
+        requiredField.shouldBe(Condition.visible);
+    }
+
+    public void checkWrongExpirationDate() {
+        wrongExpirationDate.shouldBe(Condition.visible);
+    }
+
+    public void checkExpiredDate() {
+        expiredDate.shouldBe(Condition.visible);
+    }
+
 
     public void completeCreditForm(DataHelper.CardInfo cardInfo) {
         number.setValue(cardInfo.getNumber());
